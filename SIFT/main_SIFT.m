@@ -8,7 +8,7 @@
 
 close all; clear; clc;
 %% Make fileholder for images saving
-if (exist('save_image','dir') == 0) % Èç¹ûÎÄ¼ş¼Ğ²»´æÔÚ
+if (exist('save_image','dir') == 0) % å¦‚æœæ–‡ä»¶å¤¹ä¸å­˜åœ¨
     mkdir('save_image');
 end
 
@@ -62,12 +62,12 @@ warning off
 tic;
 [I1_gauss,I1_grad,I1_angle] = ...
     Build_Gaussian_Pyramid(I1,nOctaves_1,nLayers,Gsigma);
-disp(['²Î¿¼Í¼Ïñ´´½¨Gauss Pyramid»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['å‚è€ƒå›¾åƒåˆ›å»ºGauss PyramidèŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 
 %% DoG pyramid of reference image
 tic;
 I1_DoG = Build_DoG_Pyramid(I1_gauss,nOctaves_1,nLayers);
-disp(['²Î¿¼Í¼Ïñ´´½¨DoG Pyramid»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['å‚è€ƒå›¾åƒåˆ›å»ºDoG PyramidèŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 
 %% Display the pyramids of reference image
 % Display_Pyramid(I1_gauss,I1_DoG,I1_grad,I1_angle,...
@@ -78,43 +78,43 @@ tic;
 keypoints_1 = Detect_Keypoint...
     (I1_DoG,nOctaves_1,nLayers,Gsigma,...
      contrast_thr_1,edge_thr,I1_grad,I1_angle);
-disp(['²Î¿¼Í¼Ïñ¹Ø¼üµã¶¨Î»»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['å‚è€ƒå›¾åƒå…³é”®ç‚¹å®šä½èŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 clear I1_DoG;
 
 % Display_Keypoint(I1_gauss,nOctaves_1,nLayers,keypoints_1)
 clear I1_gauss;
 
-%% Descriptor generation of the reference image 
+%% Descriptor generation of reference image 
 tic;
 descriptors_1 = Generate_Descriptor(I1_grad,I1_angle,...
 	keypoints_1,type_des);
-disp(['²Î¿¼Í¼ÏñÃèÊö·ûÉú³É»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']); 
+disp(['å‚è€ƒå›¾åƒæè¿°ç¬¦ç”ŸæˆèŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']); 
 clear I1_grad;
 clear I1_angle;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sensed
 
-%% Gaussian pyramid of the image to be registered
+%% Gaussian pyramid of sensed image
 tic;
 [I2_gauss,I2_grad,I2_angle] = ...
     Build_Gaussian_Pyramid(I2,nOctaves_2,nLayers,Gsigma);
-disp(['´ıÅä×¼Í¼Ïñ´´½¨Gauss Pyramid»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['å¾…é…å‡†å›¾åƒåˆ›å»ºGauss PyramidèŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 
-%% DoG of the image to be registered
+%% DoG of sensed image
 tic;
 I2_DoG = Build_DoG_Pyramid(I2_gauss,nOctaves_2,nLayers);
-disp(['´ıÅä×¼Í¼Ïñ´´½¨DoG Pyramid»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['å¾…é…å‡†å›¾åƒåˆ›å»ºDoG PyramidèŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 
-%% Display the pyramids of image to be registered
+%% Display the pyramids of sensed image
 % Display_Pyramid(I2_gauss,I2_DoG,I2_grad,...
 % 	I2_angle,nOctaves_2,nLayers,'Image to be registered');
 
-%% Image to be registered DoG pyramid local extreme point detection
+%% Sensed image DoG pyramid local extreme point detection
 tic;
 keypoints_2 = Detect_Keypoint...
     (I2_DoG,nOctaves_2,nLayers,Gsigma,...
      contrast_thr_2,edge_thr,I2_grad,I2_angle);
-disp(['´ıÅä×¼Í¼Ïñ¹Ø¼üµã¶¨Î»»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['å¾…é…å‡†å›¾åƒå…³é”®ç‚¹å®šä½èŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 clear I2_DoG;
 
 % Display_Keypoint(I2_gauss,nOctaves_1,nLayers,keypoints_2)
@@ -124,7 +124,7 @@ clear I2_gauss;
 tic;
 descriptors_2 = Generate_Descriptor(I2_grad,I2_angle,...
 	keypoints_2,type_des);
-disp(['´ıÅä×¼Í¼ÏñÃèÊö·ûÉú³É»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']); 
+disp(['å¾…é…å‡†å›¾åƒæè¿°ç¬¦ç”ŸæˆèŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']); 
 clear I2_grad;
 clear I2_angle;
 
@@ -134,7 +134,7 @@ clear I2_angle;
 tic;
 [cor1,cor2,solution,rmse] = ...
     Match_Keypoint(descriptors_1,descriptors_2,trans_form);
-disp(['ÌØÕ÷µãÆ¥Åä»¨·ÑÊ±¼äÊÇ£º',num2str(toc),'s']);
+disp(['ç‰¹å¾ç‚¹åŒ¹é…èŠ±è´¹æ—¶é—´æ˜¯ï¼š',num2str(toc),'s']);
 
 % matchment = Show_Matches(I1,I2,cor1,cor2,1); pause(0.01)
 cor1 = [cor1(:,1)/resample1(2), cor1(:,2)/resample1(1);];
